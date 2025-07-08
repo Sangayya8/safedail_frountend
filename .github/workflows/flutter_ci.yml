@@ -12,7 +12,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -23,6 +22,16 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         flutter-version: '3.22.3'
+
+    - name: 🔁 Cache dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.pub-cache
+          ~/.flutter
+        key: ${{ runner.os }}-flutter-${{ hashFiles('pubspec.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-flutter-
 
     - name: 📦 Install dependencies
       run: flutter pub get
